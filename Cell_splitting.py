@@ -136,11 +136,11 @@ def image_to_cells(image_name):
             cv2.drawContours(img3, [box], 0, (255, 0, 0), 2)
             if area < 0.98 * max_area:
                 tmp_box = box
-                box[0] = [min(box[:, 0]), min(box[:, 1])]
-                box[1] = [min(box[:, 0]), max(box[:, 1])]
-                box[2] = [max(box[:, 0]), min(box[:, 1])]
-                box[3] = [max(box[:, 0]), max(box[:, 1])]
-                all_boxes.append(box)
+                tmp_box[0] = [min(box[:, 0]), min(box[:, 1])]
+                tmp_box[1] = [min(box[:, 0]), max(box[:, 1])]
+                tmp_box[2] = [max(box[:, 0]), min(box[:, 1])]
+                tmp_box[3] = [max(box[:, 0]), max(box[:, 1])]
+                all_boxes.append(tmp_box)
 
     min_x = 10000
     max_x = 0
@@ -196,11 +196,15 @@ def image_to_cells(image_name):
         for j in range(amount_of_columns):
             cells[i].append(tmp_img3[left_y[i]:left_y[i + 1], upper_x[j]:upper_x[j + 1]])
 
-    return cells
+    for i in range(amount_of_rows):
+        for j in range(amount_of_columns):
+            height, width = cells[i][j].shape[:2]
+            cells[i][j] = cells[i][j][int(height * 0.02):int(height * 0.98), int(width * 0.02):int(width * 0.98)]
 
-'''
-for i in range(len(cells)):
-    for j in range(len(cells[i])):
-        cv2.imshow('cells', cells[i][j])
-        cv2.waitKey()
-'''
+    '''
+    for i in range(len(cells)):
+        for j in range(len(cells[i])):
+            cv2.imshow('cells', cells[i][j])
+            cv2.waitKey()
+    '''
+    return cells
