@@ -27,12 +27,13 @@ def emnist_predict_img(model, img):
 
 
 dir = os.path.abspath(os.curdir)
-files = os.listdir(dir + '\\Example_Tables')
+files = os.listdir(dir + '\\Tables')
 cells_of_tables = []
 count = 0
 start_time = datetime.now()
 for i in range(len(files)):
-    cells_of_tables.append(image_to_cells(dir + '\\Example_Tables\\' + files[i]))
+    if 'jpg' or 'png' in files[i]:
+        cells_of_tables.append(image_to_cells(dir + '\\Tables\\' + files[i]))
 for k in range(len(cells_of_tables)):
     table_df = []
     cells = cells_of_tables[k]
@@ -87,7 +88,7 @@ for k in range(len(cells_of_tables)):
                 result += emnist_predict_img(model, letters[x][2])
             table_df[i].append(result)
     df = pd.DataFrame(table_df)
-    df.to_excel(dir + '\\Comnist_Example_Tables\\' + files[k][:-3] + 'xls')
+    df.to_excel(dir + '\\Comnist_Tables\\' + files[k][:-3] + 'xls')
     count += 1
     print(count)
     print(datetime.now() - start_time)

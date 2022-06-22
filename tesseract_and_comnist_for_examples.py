@@ -36,7 +36,8 @@ cells_of_tables = []
 count = 0
 start_time = datetime.now()
 for i in range(len(files)):
-    cells_of_tables.append(image_to_cells(dir + '\\Example_Tables_1_2\\' + files[i]))
+    if 'jpg' or 'png' in files[i]:
+        cells_of_tables.append(image_to_cells(dir + '\\Example_Tables_1_2\\' + files[i]))
 for k in range(len(cells_of_tables)):
     table_df = []
     cells = cells_of_tables[k]
@@ -110,7 +111,8 @@ for k in range(len(cells_of_tables)):
 files = os.listdir(dir + '\\Example_Tables_1-1_3')
 cells_of_tables = []
 for i in range(len(files)):
-    cells_of_tables.append(image_to_cells(dir + '\\Example_Tables_1-1_3\\' + files[i]))
+    if 'jpg' or 'png' in files[i]:
+        cells_of_tables.append(image_to_cells(dir + '\\Example_Tables_1-1_3\\' + files[i]))
 for k in range(len(cells_of_tables)):
     table_df = []
     cells = cells_of_tables[k]
